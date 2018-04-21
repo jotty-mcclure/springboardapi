@@ -2,12 +2,11 @@ var routes = require('express').Router(),
 	_utils = require('../_utils'),
 	controller = require('./authController');
 
-routes.route('/auth')
-		.all(_utils.token)
-		.get(controller.home)
-		.post(controller.home);
+// routes.route('/authenticate')
+// 	.all(_utils.token)
+// 	.post(controller.home);
 
-routes.route('/auth/create-token')
-		.post(controller.createToken);
+routes.route('/authenticate')
+		.post(controller.authenticate);
 
 module.exports = routes;
