@@ -1,0 +1,17 @@
+{
+  "name": "SpringboardAPI",
+  "version": "0.0.1",
+  "private": true,
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "helmet": "^3.9.0",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^4.13.2",
+    "morgan": "^1.9.0",
+    "stripe": "^5.4.0"
+  }
+}
