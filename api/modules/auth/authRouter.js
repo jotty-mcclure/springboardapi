@@ -13,6 +13,7 @@ routes.route('/verify-email')
 		.post(controller.verifyEmail);	
 
 routes.route('/register')
-		.post(controller.register);		
+		.all(_utils.token)
+		.post(controller.register);
 
 module.exports = routes;
