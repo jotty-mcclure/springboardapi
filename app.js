@@ -7,6 +7,7 @@ var express 	= require('express'),
 	morgan      = require('morgan'),
 	mongoose    = require('mongoose'),
 	promise		= require('bluebird'),
+	nodemailer 	= require('nodemailer'),
 	config		= require('./_config');
 
 // configuration
@@ -15,21 +16,21 @@ mongoose.connect(config.env[config.mode].database, { useMongoClient: true, promi
 mongoose.Promise = promise;
 
 app.set('secret', config.env[config.mode].secret);
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
 app.use(morgan('dev'));
-
 app.use(cors({
 	origin: function (origin, callback) {
-		if (config.allowedOrigins.indexOf(origin) !== -1) {
+		if (config.allowedOrigins == '*' || config.allowedOrigins.indexOf(origin) !== -1) {
 			callback(null, true);
 		} else {
 			callback(new Error('Not allowed by CORS'));
 		}
 	}
 }));
+// email transporter config
+app.locals.transporter = nodemailer.createTransport(config.env[config.mode].smtp);	
 
 // routes
 require('./api/routes')(app, config);
