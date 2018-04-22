@@ -29,7 +29,8 @@ app.use(cors({
 		}
 	}
 }));
-// email transporter config
+// set app locals
+app.locals.config = config;
 app.locals.transporter = nodemailer.createTransport(config.env[config.mode].smtp);	
 
 // routes
