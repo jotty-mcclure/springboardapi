@@ -9,4 +9,7 @@ var routes = require('express').Router(),
 routes.route('/authenticate')
 		.post(controller.authenticate);
 
+routes.route('/register')
+		.post(controller.register);		
+
 module.exports = routes;
