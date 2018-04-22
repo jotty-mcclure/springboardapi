@@ -9,6 +9,9 @@ var routes = require('express').Router(),
 routes.route('/authenticate')
 		.post(controller.authenticate);
 
+routes.route('/verify-email')
+		.post(controller.verifyEmail);	
+
 routes.route('/register')
 		.post(controller.register);		
 

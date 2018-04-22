@@ -1,9 +1,40 @@
 var uuid	    = require('uuid/v1'),
-    bcrypt		= require('bcrypt'),
+	bcrypt		= require('bcrypt'),
 	stripe		= require("stripe")("sk_test_Tuwf8Z34ZRlRXbOseJRUXjm4"),
     User	    = require('../../models/user'),
-    _utils      = require('../_utils'),
+	_utils      = require('../_utils'),
     exporter    = {};
+
+exporter.verifyEmail = (req, res) => {
+	var conf = req.app.locals.config;
+	if (req.body.email) {
+		User.findOne({ email: req.body.email})
+        	.then((user)=>{
+				if (user) {
+					res.send(200);
+				} else {
+					var mailData = {
+						from: config.env[config.mode].fromEmail,
+						to: req.body.email,
+						subject: 'Verify email',
+						text: 'This is a sample email.'
+					};
+					req.app.locals.transporter.sendMail(mailData)
+						.then((response) => {
+							res.send(200);
+							//send an email with a validation link
+							 // OR //
+							 //send a 6 digit verification code
+						})
+						.catch((error) => {
+							console.log(error);
+						});
+				}
+			});
+	} else {
+		res.send(500);
+	}
+}
 
 exporter.register = (req, res) => {
 	if(req.body.password){
