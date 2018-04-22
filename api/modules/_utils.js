@@ -1,5 +1,6 @@
 var utilities	= {},
 	bcrypt		= require('bcrypt'),
+	promise		= require('bluebird'),
 	config		= require('../../_config'),
 	jwt			= require('jsonwebtoken');
 
@@ -41,6 +42,58 @@ utilities.token = function(req, res, next) {
 			message: 'No token provided.'
 		});
 	}
+}
+
+utilities.authenticateUser = (body) => {
+	var User = require('../models/user');
+
+	return User.findOne({ email: body.email})
+			.then((user)=>{
+				if (!user) {
+					return {
+						success: false,
+						message: 'Authentication failed.',
+						code: 'authentication-failure'
+					};
+				} else if (user) {
+					// check if password matches
+					return bcrypt.compare(body.password, user.password)
+							.then((doesMatch) => {
+								if (doesMatch){
+									// delete any unneeded user object properties and setup the payload
+									delete user.password;
+									
+									var token = utilities.createToken({
+													id: user.id,
+													email: user.email,
+													roles: user.roles,
+													type: 'user'
+												});
+									
+									return {
+										success: true,
+										message: 'Successful authentication.',
+										code: 'authentication-success',
+										token: token
+									};
+								}else{
+									return {
+										success: false,
+										message: 'Authentication failed.',
+										code: 'authentication-failure'
+									};
+								}
+							})
+							.catch((err) => {
+								console.log(err);
+								return false;
+							});
+				}
+			})
+			.catch((err)=>{
+				console.log(err);
+				return err;
+			});
 }
 
 module.exports = utilities;

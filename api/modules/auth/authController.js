@@ -39,8 +39,9 @@ exporter.verifyEmail = (req, res) => {
 }
 
 exporter.register = (req, res) => {
-	if(req.body.password){
+	if(req.body.password && req.decoded.type === 'email-verification' && req.decoded.email === req.body.email){
 		var userObj = req.body,
+			unhashedPass = req.body.password,
 			createStripeCustomer = req.body.createStripeCustomer,
 			stripeToken = userObj.stripeToken || null;
 
@@ -51,7 +52,6 @@ exporter.register = (req, res) => {
 		var newUser = new User(userObj);
 		newUser.save()
 			.then(function(newUser) {
-				
 				// Check if a new stripe customer should be created
 				if (createStripeCustomer && stripeToken) {
 					var newAccountId = uuid(),
@@ -64,7 +64,7 @@ exporter.register = (req, res) => {
 								name: newUser.name.last + ', ' + newUser.name.first
 							}
 						};
-					
+
 					return stripe.customers.create(newCustomer)
 						.then(function(customer) {
 							// Update the new user with the account details and strip info.
@@ -85,11 +85,19 @@ exporter.register = (req, res) => {
 							return false;
 						});
 				} else {
-					res.send(200);
+					userObj.password = unhashedPass;
+					return _utils.authenticateUser(userObj)
+								.then((response) => {
+									return res.status(200).json(response);;
+								})
+								.catch((err) => {
+									console.log(err);
+									return false;
+								});
 				}
 			}).catch(function(err) {
 				console.log(err)
-				res.status(400)
+				return res.status(400);
 			});
 	} else {
 		res.status(400);
@@ -97,46 +105,11 @@ exporter.register = (req, res) => {
 };
 
 exporter.authenticate = (req, res) => {
-    User.findOne({ email: req.body.email})
-        .then((user)=>{
-            if (!user) {
-                res.json({
-                    success: false,
-                    message: 'Authentication failed.',
-                    code: 'authentication-failure'
-                });
-            } else if (user) {
-                // check if password matches
-                bcrypt.compare(req.body.password, user.password, (err, doesMatch)=>{
-                    if (doesMatch){
-                        
-                        // delete any unneeded user object properties and setup the payload
-                        delete user.password;
-                        
-                        var token = _utils.createToken({
-                                        id: user.id,
-                                        email: user.email,
-										roles: user.roles,
-										type: 'user'
-                                    });
-                        
-                        res.status(200).json({
-                            success: true,
-                            message: 'Successful authentication.',
-                            code: 'authentication-success',
-                            token: token
-                        });
-                    }else{
-                        res.json({
-                            success: false,
-                            message: 'Authentication failed.',
-                            code: 'authentication-failure'
-                        });
-                    }
-                });
-            }
-        })
-        .catch((err)=>{
+	_utils.authenticateUser(req.body)
+		.then((response) => {
+			res.status(200).json(response);
+		})
+        .catch((err) => {
             console.log(err);
         });
 };
