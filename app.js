@@ -8,6 +8,8 @@ var express 	= require('express'),
 	mongoose    = require('mongoose'),
 	promise		= require('bluebird'),
 	nodemailer 	= require('nodemailer'),
+	fs			= require('fs'),
+	path		= require('path'),
 	config		= require('./_config');
 
 // configuration
@@ -19,7 +21,9 @@ app.set('secret', config.env[config.mode].secret);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(morgan('dev'));
+app.use(morgan('common', {
+	stream: fs.createWriteStream(path.join(__dirname, 'logs/access.log'), {flags: 'a'})
+}));
 app.use(cors({
 	origin: function (origin, callback) {
 		if (config.allowedOrigins == '*' || config.allowedOrigins.indexOf(origin) !== -1) {
