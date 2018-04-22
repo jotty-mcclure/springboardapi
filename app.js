@@ -3,6 +3,7 @@ var express 	= require('express'),
 	bodyParser  = require('body-parser'),
 	bcrypt		= require('bcrypt'),
 	helmet		= require('helmet'),
+	cors		= require('cors'),
 	morgan      = require('morgan'),
 	mongoose    = require('mongoose'),
 	promise		= require('bluebird'),
@@ -19,6 +20,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
 app.use(morgan('dev'));
+
+app.use(cors({
+	origin: function (origin, callback) {
+		if (config.allowedOrigins.indexOf(origin) !== -1) {
+			callback(null, true);
+		} else {
+			callback(new Error('Not allowed by CORS'));
+		}
+	}
+}));
 
 // routes
 require('./api/routes')(app, config);

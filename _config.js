@@ -1,5 +1,6 @@
 module.exports = {
 	'mode': 'dev',
+	'allowedOrigins': ['http://localhost:8888'],
 	'env': {
 		'dev': {
 			'database': 'mongodb://dbo:123456@127.0.0.1:27017/simpletrack?authSource=admin',
