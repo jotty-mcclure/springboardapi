@@ -4,7 +4,7 @@ var routes = require('express').Router(),
 
 routes.route('/user')
 		.all(_utils.token)
-		.get(controller.getUserInformation)
-		.post(controller.updateUserInformation);
+		.get(controller.getUserProfile)
+		.post(controller.updateUserProfile);
 
 module.exports = routes;

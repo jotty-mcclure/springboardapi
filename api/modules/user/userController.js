@@ -6,7 +6,7 @@ var uuid	    		= require('uuid/v1'),
 	_utils      		= require('../_utils'),
     exporter    		= {};
 
-exporter.getUserInformation = (req, res) => {
+exporter.getUserProfile = (req, res) => {
 	let objId = new mongo.ObjectID(req.authenticatedUser.id);
 	User.findOne({ _id: objId}, {profile: 1})
 		.then((user) => {
@@ -21,7 +21,7 @@ exporter.getUserInformation = (req, res) => {
 		});
 };
 
-exporter.updateUserInformation = (req, res) => {
+exporter.updateUserProfile = (req, res) => {
 	let objId = new mongo.ObjectID(req.authenticatedUser.id);
 	let updateObj = {};
 	Object.keys(req.body).forEach((field)=>{
