@@ -30,7 +30,7 @@ utilities.token = function(req, res, next) {
 				return res.json({ success: false, message: message });
 			} else {
 				// if everything is good, save to request for use in other routes
-				req.decoded = decoded;
+				req.authenticatedUser = decoded;
 				next();
 			}
 		});

@@ -39,7 +39,7 @@ exporter.verifyEmail = (req, res) => {
 }
 
 exporter.register = (req, res) => {
-	if(req.body.password && req.decoded.type === 'email-verification' && req.decoded.email === req.body.email){
+	if(req.body.password && req.authenticateUser.type === 'email-verification' && req.authenticateUser.email === req.body.email){
 		var userObj = req.body,
 			unhashedPass = req.body.password,
 			createStripeCustomer = req.body.createStripeCustomer,
