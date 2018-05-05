@@ -7,4 +7,8 @@ routes.route('/user')
 		.get(controller.getUserProfile)
 		.post(controller.updateUserProfile);
 
+routes.route('/user/update-credentials')
+		.all(_utils.token)
+		.post(controller.updateCredentials);
+
 module.exports = routes;

@@ -37,4 +37,24 @@ exporter.updateUserProfile = (req, res) => {
 		});
 }
 
+exporter.updateCredentials = (req, res) => {
+	let objId = new mongo.ObjectID(req.authenticatedUser.id);
+	let updateObj = {};
+	
+	if (req.body.email) updateObj.email = req.body.email
+	if (req.body.password) updateObj.password = bcrypt.hashSync(req.body.password, 256);
+
+	if (req.body) {
+		User.update({ _id: objId}, {$set: updateObj})
+			.then((user) => {
+				res.status(200).json(user.profile);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	} else {
+		res.status(200);
+	}
+}
+
 module.exports = exporter;
