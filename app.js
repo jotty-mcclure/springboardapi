@@ -37,6 +37,9 @@ app.use(cors({
 app.locals.config = config;
 app.locals.transporter = nodemailer.createTransport(config.env[config.mode].smtp);	
 
+// serve the front-end pages
+app.use(express.static(__dirname + '/public/'));
+
 // routes
 require('./api/routes')(app, config);
 
