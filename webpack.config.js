@@ -21,7 +21,11 @@ module.exports = {
     hot: true,
     proxy: {
       "/api/v1/*": "http://[::1]:3001"
-    }
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    historyApiFallback: true,
   },
   entry: ['react-hot-loader/patch', path.join(__dirname, '/src/index.jsx')],
   module: {
