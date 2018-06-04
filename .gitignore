@@ -30,3 +30,5 @@ package-lock.json
 
 # Dev environment settings 
 .vscode/*
+
+public/*
