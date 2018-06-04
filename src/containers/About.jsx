@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'reactstrap';
 
 class ItemLister extends React.Component {
   constructor() {
@@ -23,7 +24,9 @@ class ItemLister extends React.Component {
 const About = () => (
   <div>
     <h2>About Page</h2>
-    <ItemLister />
+    <Alert color="primary">
+      <ItemLister />
+    </Alert>
   </div>
 );
 

@@ -3,6 +3,8 @@ import { BrowserRouter, Link } from 'react-router-dom';
 
 import Routes from './Routes';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const App = () => (
   <BrowserRouter>
     <main className="container">
