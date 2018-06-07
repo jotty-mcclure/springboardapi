@@ -6,6 +6,11 @@ var uuid	    		= require('uuid/v1'),
 	messageTemplates   	= require('../messageTemplates/index'),
     exporter    		= {};
 
+
+exporter.test = (req, res) => {
+	res.status(200).json({message:"hello world!"});
+}
+
 exporter.verifyEmail = (req, res) => {
 	if (req.body.email) {
 		User.findOne({ email: req.body.email})

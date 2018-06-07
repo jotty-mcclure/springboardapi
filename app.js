@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
 app.use(morgan('common', {
-	stream: fs.createWriteStream(path.join(__dirname, 'logs/access.log'), {flags: 'a'})
+	stream: fs.createWriteStream(path.join(__dirname, 'server/logs/access.log'), {flags: 'a'})
 }));
 app.use(cors({
 	origin: function (origin, callback) {
@@ -38,10 +38,10 @@ app.locals.config = config;
 app.locals.transporter = nodemailer.createTransport(config.env[config.mode].smtp);	
 
 // serve the front-end pages
-app.use(express.static(__dirname + '/public/'));
+app.use(express.static(path.join(__dirname, 'client/dist')));
 
 // routes
-require('./api/routes')(app, config);
+require('./server/routes')(app, config);
 
 // start server
 app.listen(port);

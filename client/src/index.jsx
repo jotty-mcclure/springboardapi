@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
-import App from './App';
-
-import './less/style.less';
+import App from './components/App';
 
 const root = document.getElementById('root');
 
@@ -20,5 +18,5 @@ const render = (Component) => {
 render(App);
 
 if (module.hot) {
-  module.hot.accept('./App', () => { render(App); });
+  module.hot.accept('./components/App', () => { render(App); });
 }

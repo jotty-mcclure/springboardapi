@@ -2,6 +2,9 @@ var routes = require('express').Router(),
 	_utils = require('../_utils'),
 	controller = require('./authController');
 
+routes.route('/test')
+	.get(controller.test);
+
 routes.route('/authenticate')
 		.post(controller.authenticate);
 
