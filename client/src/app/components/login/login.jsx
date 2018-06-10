@@ -22,8 +22,6 @@ export default class LoginForm extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         };
-
-        console.log('edrftgyhu');
     
         fetch('/api/v1/authenticate', requestOptions)
             .then(response => {
@@ -34,7 +32,6 @@ export default class LoginForm extends React.Component {
                 return response.json();
             })
             .then(user => {
-                console.log(user);
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -69,11 +66,13 @@ export default class LoginForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSignIn.bind(this)}>
-                <h3>Sign in</h3>
-                <input type="text" ref="username" placeholder="enter you username" />
-                <input type="password" ref="password" placeholder="enter password" />
-                <input type="submit" value="Login" />
+            <form id="login-form" onSubmit={this.handleSignIn.bind(this)}>
+                <h4>Please Sign In</h4>
+                <label htmlFor="email" className="sr-only">Email address</label>
+                <input type="text" ref="username" placeholder="Email" className="form-control" id="email" />
+                <label htmlFor="password" className="sr-only">Password</label>
+                <input type="password" ref="password" placeholder="Password" className="form-control" id="password" />
+                <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
         )
     }

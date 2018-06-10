@@ -23,7 +23,7 @@ class ItemLister extends React.Component {
 
 const About = () => (
   <div>
-    <h2>About Page</h2>
+    <h2>About</h2>
     <Alert color="primary">
       <ItemLister />
     </Alert>
