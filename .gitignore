@@ -32,3 +32,5 @@ package-lock.json
 .vscode/*
 
 dist/*
+client/dist/index.html
+client/dist/index.js
