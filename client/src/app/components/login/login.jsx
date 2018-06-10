@@ -15,6 +15,38 @@ export default class LoginForm extends React.Component {
     signIn(username, password) {
         // This is where you would call Firebase, an API etc...
         // calling setState will re-render the entire app (efficiently!)
+        const email = username;
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        };
+
+        console.log('edrftgyhu');
+    
+        fetch('/api/v1/authenticate', requestOptions)
+            .then(response => {
+                if (!response.ok) { 
+                    return Promise.reject(response.statusText);
+                }
+    
+                return response.json();
+            })
+            .then(user => {
+                console.log(user);
+                // login successful if there's a jwt token in the response
+                if (user && user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('token', user.token);
+
+                    console.log(user);
+                }
+    
+                return user;
+            })
+            .catch(err=>console.log(err));
+
         this.setState({
             user: {
                 username,
@@ -25,10 +57,9 @@ export default class LoginForm extends React.Component {
 
     handleSignIn(e) {
         e.preventDefault()
-        console.log('fuck everything.');
         let username = this.refs.username.value
         let password = this.refs.password.value
-        //this.props.onSignIn(username, password)
+        this.signIn(username, password);
     }
     
     signOut() {
