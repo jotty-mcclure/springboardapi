@@ -1,0 +1,19 @@
+// Media Query Sizing
+@width-sm: 576px;
+@width-md: 768px;
+@width-lg: 992px;
+@width-xl: 1200px;
+
+// Within Bounds
+@screen-xs: ~'screen and (max-width: @{width-sm})';
+@screen-sm: ~'screen and (min-width: @{width-sm}) and (max-width: @{width-md})';
+@screen-md: ~'screen and (min-width: @{width-md}) and (max-width: @{width-lg})';
+@screen-lg: ~'screen and (min-width: @{width-lg}) and (max-width: @{width-xl})';
+@screen-xl: ~'screen and (min-width: @{width-xl})';
+
+// Minimum Bounds
+@screen-gt-xs: ~'screen';
+@screen-gt-sm: ~'screen and (min-width: @{width-sm})';
+@screen-gt-md: ~'screen and (min-width: @{width-md})';
+@screen-gt-lg: ~'screen and (min-width: @{width-lg})';
+@screen-gt-xl: ~'@{screen-xl}';
