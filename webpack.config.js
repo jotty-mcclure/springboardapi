@@ -46,6 +46,18 @@ module.exports = {
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader',
+      },
+      {
+        test: /\.(jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+        use: {
+          loader: "url-loader",
+          options: {
+            limit: 50000,
+            mimetype: "application/font-[ext]",
+            name: "./webfonts/[name].[ext]", // Output below ./fonts
+            publicPath: "../", // Take the directory into account
+          },
+        }
       }
     ],
   },
@@ -61,6 +73,9 @@ module.exports = {
     [
       HTMLWebpackPluginConfig,
       new webpack.HotModuleReplacementPlugin(),
-    ] :
-    [HTMLWebpackPluginConfig, DefinePluginConfig],
+    ] : [
+      HTMLWebpackPluginConfig,
+      DefinePluginConfig,
+    ],
+    
 };
