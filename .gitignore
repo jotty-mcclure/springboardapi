@@ -31,6 +31,6 @@ package-lock.json
 # Dev environment settings 
 .vscode/*
 
-dist/*
+client/dist/*
 client/dist/index.html
 client/dist/index.js
