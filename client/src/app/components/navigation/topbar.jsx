@@ -12,6 +12,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
+import auth from '../../_utilities/auth';
 
 export default class Topbar extends React.Component {
     constructor(props) {
@@ -29,18 +30,21 @@ export default class Topbar extends React.Component {
     }
     render() {
         return (
-            <Navbar id="topbar" color="light" className="navbar fixed-top navbar-light bg-light" light expand="md">
+            <Navbar id="topbar" color="light" className="absolute-top" light expand="md">
                 <NavbarBrand href="/"></NavbarBrand>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
                         <NavItem>
-                            <NavLink href="/components/">Components</NavLink>
+                            <NavLink href="#"><i className="fas fa-cog"></i></NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                            <NavLink href="#"><i className="fas fa-database"></i></NavLink>
                         </NavItem>
-                        <UncontrolledDropdown nav inNavbar>
+                        <NavItem>
+                            <NavLink href="#" onClick={() => { auth.clearAppStorage(); }}><i className="fas fa-sign-out-alt"></i></NavLink>
+                        </NavItem>
+                        {/* <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>
                                 Options
                             </DropdownToggle>
@@ -56,7 +60,7 @@ export default class Topbar extends React.Component {
                                     Reset
                                 </DropdownItem>
                             </DropdownMenu>
-                        </UncontrolledDropdown>
+                        </UncontrolledDropdown> */}
                     </Nav>
                 </Collapse>
             </Navbar>
