@@ -53,7 +53,7 @@ utilities.authenticateUser = (body) => {
 					return {
 						success: false,
 						message: 'Authentication failed.',
-						code: 'authentication-failure'
+						code: 'authenticationFailure'
 					};
 				} else if (user) {
 					// check if password matches
@@ -73,14 +73,14 @@ utilities.authenticateUser = (body) => {
 									return {
 										success: true,
 										message: 'Successful authentication.',
-										code: 'authentication-success',
+										code: 'authenticationSuccess',
 										token: token
 									};
 								}else{
 									return {
 										success: false,
 										message: 'Authentication failed.',
-										code: 'authentication-failure'
+										code: 'authenticationFailure'
 									};
 								}
 							})

@@ -44,6 +44,9 @@ exporter.verifyEmail = (req, res) => {
 }
 
 exporter.register = (req, res) => {
+	req.authenticatedUser.type = 'email-verification';
+	req.authenticatedUser.email = req.body.email;
+	
 	if(req.body.password && req.authenticatedUser.type === 'email-verification' && req.authenticatedUser.email === req.body.email){
 		var userObj = req.body,
 			unhashedPass = req.body.password,

@@ -1,4 +1,8 @@
 import React from 'react';
+import { UncontrolledAlert } from 'reactstrap';
+import labels from '../../_utilities/labels';
+import auth from '../../_utilities/auth';
+import request from '../../_utilities/request';
 
 export default class LoginForm extends React.Component {
 
@@ -7,7 +11,10 @@ export default class LoginForm extends React.Component {
         super(props)
         // the initial application state
         this.state = {
-            user: null
+            user: null,
+            login: {
+                success: null
+            }
         }
     }
 
@@ -25,31 +32,22 @@ export default class LoginForm extends React.Component {
     
         fetch('/api/v1/authenticate', requestOptions)
             .then(response => {
-                if (!response.ok) { 
-                    return Promise.reject(response.statusText);
-                }
-    
+                if ( !response.ok ) return Promise.reject(response.statusText);
                 return response.json();
             })
             .then(user => {
-                // login successful if there's a jwt token in the response
-                if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('token', user.token);
-
-                    console.log(user);
+                if ( user.success && user.token ) {
+                    auth.setToken(user.token, true);
+                    this.setState({
+                        user: {username,password}
+                    });
+                } else {
+                    this.setState({
+                        login: {success: user.success}
+                    });
                 }
-    
-                return user;
             })
             .catch(err=>console.log(err));
-
-        this.setState({
-            user: {
-                username,
-                password,
-            }
-        })
     }    
 
     handleSignIn(e) {
@@ -65,16 +63,34 @@ export default class LoginForm extends React.Component {
     }
 
     render() {
-        return (
-            <form id="login-form" onSubmit={this.handleSignIn.bind(this)}>
-                <h4>Please Sign In</h4>
-                <label htmlFor="email" className="sr-only">Email address</label>
-                <input type="text" ref="username" placeholder="Email" className="form-control" id="email" />
-                <label htmlFor="password" className="sr-only">Password</label>
-                <input type="password" ref="password" placeholder="Password" className="form-control" id="password" />
-                <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            </form>
-        )
+        const loginSuccess = this.state.login.success;
+        let loginFailureAlert = '';
+        if ( loginSuccess == false && loginSuccess !== null) {
+            loginFailureAlert = <UncontrolledAlert className="mt-3 mb-0" color="danger"> {labels.login.authenticationFailure} </UncontrolledAlert>
+        }
+
+        if ( localStorage.getItem('access-token') ) {
+            return (
+                <a onClick={() => {
+                        auth.clearAppStorage();
+                        this.signOut();
+                    }} href="javascript:void(0)">Logout</a>
+            );
+        } else {
+            return (
+                <form id="login-form" onSubmit={this.handleSignIn.bind(this)}>
+                    <h4>Please Sign In</h4>
+                    <label htmlFor="email" className="sr-only">{labels.login.fieldNames.email}</label>
+                    <input type="text" ref="username" placeholder={labels.login.fieldNames.email} className="form-control" id="email" />
+                    <label htmlFor="password" className="sr-only">{labels.login.fieldNames.password}</label>
+                    <input type="password" ref="password" placeholder={labels.login.fieldNames.password} className="form-control" id="password" />
+                    <button className="btn btn-lg btn-primary btn-block" type="submit">{labels.login.fieldNames.submitButton}</button>
+
+                    {/* <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> */}
+                    {loginFailureAlert}
+                </form>
+            )
+        }
     }
 
 }
