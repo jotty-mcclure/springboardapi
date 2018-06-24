@@ -80,13 +80,12 @@ export default class LoginForm extends React.Component {
             return (
                 <form id="login-form" onSubmit={this.handleSignIn.bind(this)}>
                     <h4>Please Sign In</h4>
-                    <label htmlFor="email" className="sr-only">{labels.login.fieldNames.email}</label>
-                    <input type="text" ref="username" placeholder={labels.login.fieldNames.email} className="form-control" id="email" />
-                    <label htmlFor="password" className="sr-only">{labels.login.fieldNames.password}</label>
-                    <input type="password" ref="password" placeholder={labels.login.fieldNames.password} className="form-control" id="password" />
-                    <button className="btn btn-lg btn-primary btn-block" type="submit">{labels.login.fieldNames.submitButton}</button>
-
-                    {/* <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> */}
+                    <label htmlFor="email" className="sr-only">{labels.login.email}</label>
+                    <input type="text" ref="username" placeholder={labels.login.email} className="form-control" id="email" />
+                    <label htmlFor="password" className="sr-only">{labels.login.password}</label>
+                    <input type="password" ref="password" placeholder={labels.login.password} className="form-control" id="password" />
+                    <button className="btn btn-lg btn-primary btn-block" type="submit">{labels.login.submitButton}</button>
+                    <button className="btn btn-sm btn-link btn-block" type="button">{labels.login.registerButton}</button>
                     {loginFailureAlert}
                 </form>
             )
