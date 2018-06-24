@@ -8,7 +8,7 @@ import { Nav,
         DropdownItem } from 'reactstrap';
 import { BrowserRouter, Link } from 'react-router-dom';
 
-export default class Navigation extends React.Component {
+export default class Sidebar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -55,6 +55,12 @@ export default class Navigation extends React.Component {
                             <Link to="/about" className="nav-link">
                                 <i className="fas fa-tachometer-alt fa-fw" />
                                 <span className="nav-label">About</span>
+                            </Link>
+                        </NavItem>
+                        <NavItem>
+                            <Link to="/protected" className="nav-link">
+                                <i className="fas fa-lock fa-fw" />
+                                <span className="nav-label">Protected</span>
                             </Link>
                         </NavItem>
                     </Nav>
