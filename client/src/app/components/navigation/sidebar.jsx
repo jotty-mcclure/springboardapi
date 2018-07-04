@@ -52,6 +52,12 @@ export default class Sidebar extends React.Component {
                             </Link>
                         </NavItem>
                         <NavItem>
+                            <Link to="/register" className="nav-link">
+                                <i className="fas fa-home fa-fw" />
+                                <span className="nav-label">Home</span>
+                            </Link>
+                        </NavItem>
+                        <NavItem>
                             <Link to="/about" className="nav-link">
                                 <i className="fas fa-tachometer-alt fa-fw" />
                                 <span className="nav-label">About</span>

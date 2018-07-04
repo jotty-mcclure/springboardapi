@@ -1,12 +1,12 @@
 import React from 'react';
-import auth from '../_utilities/auth';
+import Layout from '../components/layout/layout';
 import LoginForm from '../components/login/login';
 
 const Home = () => (
-  <div>
+  <Layout>
     <h2>Home</h2>
     <LoginForm />
-  </div>
+  </Layout>
 );
 
 export default Home;

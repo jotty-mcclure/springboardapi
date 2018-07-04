@@ -1,11 +1,11 @@
 import React from 'react';
-import LoginForm from '../components/login/login';
+import Layout from '../components/layout/layout';
 
 const Home = () => (
-  <div>
+  <Layout>
     <h2>Do you see me?</h2>
     <p>This is a protected page.</p>
-  </div>
+  </Layout>
 );
 
 export default Home;

@@ -1,4 +1,5 @@
 import React from 'react';
+import Layout from '../components/layout/layout';
 import { Alert } from 'reactstrap';
 
 class ItemLister extends React.Component {
@@ -22,12 +23,12 @@ class ItemLister extends React.Component {
 }
 
 const About = () => (
-  <div>
+  <Layout>
     <h2>About</h2>
     <Alert color="primary">
       <ItemLister />
     </Alert>
-  </div>
+  </Layout>
 );
 
 export default About;
