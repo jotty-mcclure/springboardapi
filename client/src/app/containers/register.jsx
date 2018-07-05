@@ -1,12 +1,12 @@
 import React from 'react';
-import Layout from '../components/layout/layout';
-import RegistrationForm from '../components/registration/registration';
+import { Layout } from '../components/layout';
+import { RegistrationForm } from '../components/registration';
 
-const register = () => (
+const Register = () => (
   <Layout>
     <h1>hello</h1>
     <RegistrationForm />
   </Layout>
 );
 
-export default register;
+export default Register;

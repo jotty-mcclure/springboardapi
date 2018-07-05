@@ -1,6 +1,5 @@
 import React from 'react';
-import Sidebar from '../navigation/sidebar';
-import Topbar from '../navigation/topbar';
+import { Sidebar, Topbar } from '../navigation';
 
 export default class Layout extends React.Component {
     render() {

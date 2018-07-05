@@ -6,7 +6,7 @@ import { Nav,
         DropdownToggle,
         DropdownMenu,
         DropdownItem } from 'reactstrap';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default class Sidebar extends React.Component {
     constructor(props) {

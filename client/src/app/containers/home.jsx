@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from '../components/layout/layout';
-import LoginForm from '../components/login/login';
+import { Layout } from '../components/layout';
+import { LoginForm } from '../components/login';
 
 const Home = () => (
   <Layout>

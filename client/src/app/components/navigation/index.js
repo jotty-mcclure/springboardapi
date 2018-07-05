@@ -1,2 +1,2 @@
-export * from './sidebar';
-export * from './topbar';
+export { default as Sidebar } from './sidebar';
+export { default as Topbar } from './topbar';

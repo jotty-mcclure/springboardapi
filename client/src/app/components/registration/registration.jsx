@@ -78,14 +78,13 @@ export default class RegistrationForm extends React.Component {
             );
         } else {
             return (
-                <form id="login-form" onSubmit={this.handleSignIn.bind(this)}>
+                <form id="registration-form" onSubmit={this.handleSignIn.bind(this)}>
                     <h4>Please Sign In</h4>
                     <label htmlFor="email" className="sr-only">{labels.login.email}</label>
                     <input type="text" ref="username" placeholder={labels.login.email} className="form-control" id="email" />
                     <label htmlFor="password" className="sr-only">{labels.login.password}</label>
                     <input type="password" ref="password" placeholder={labels.login.password} className="form-control" id="password" />
                     <button className="btn btn-lg btn-primary btn-block" type="submit">{labels.login.submitButton}</button>
-                    <button className="btn btn-sm btn-link btn-block" onClick={() => { this.setState({type: 'register'}); }} type="button">{labels.login.registerButton}</button>
                     {loginFailureAlert}
                 </form>
             )
