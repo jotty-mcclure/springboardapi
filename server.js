@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 fs.readdirSync('./api')
 	.filter(itm => fs.lstatSync(`./api/${itm}`).isDirectory() && itm.charAt(0) !== '_')
 	.forEach(api => {
-		app.use(`/${config.apiUrlBasePath}/`, require(`./api/${api}/routes`));
+		app.use(`${config.apiUrlBasePath}/`, require(`./api/${api}/routes`));
 	});
 
 // start server
