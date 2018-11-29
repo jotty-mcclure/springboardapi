@@ -11,6 +11,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "express-mung": "^0.5.1",
     "express-validator": "^5.3.0",
     "helmet": "^3.15.0",
     "jsonwebtoken": "^8.4.0",

@@ -7,7 +7,8 @@ var express 	= require('express'),
 	mongoose    = require('mongoose'),
 	promise		= require('bluebird'),
 	config		= require('./_config'),
-	fs			= require('fs');
+	fs			= require('fs'),
+	middleware 	= require('./lib/middleware');
 
 // configuration
 var port = config.port || process.env.PORT;
@@ -21,12 +22,15 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(morgan('dev'));
 
+app.use(middleware.isAuthenticated);
+app.use(middleware.responseFormatter);
+
 // routes
 fs.readdirSync('./api')
 	.filter(itm => fs.lstatSync(`./api/${itm}`).isDirectory() && itm.charAt(0) !== '_')
 	.forEach(api => {
 		app.use(`${config.apiUrlBasePath}/`, require(`./api/${api}/routes`));
-	});
+	});	
 
 // start server
 app.listen(port);
