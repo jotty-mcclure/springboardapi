@@ -20,11 +20,9 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(morgan('dev'));
 
-app.use(middleware.isAuthenticated);
 app.use(middleware.responseFormatter);
 
 router.load(app, config);
 
 // start server
 app.listen(port);
-//console.log('server started on http://localhost:' + port);
