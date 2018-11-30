@@ -3,19 +3,25 @@ const app = express();
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const compression = require('compression');
 const mongoose = require('mongoose');
-const config = require('./_config');
+const config = require('./lib/config');
 const logger = require('./lib/logger');
 const middleware = require('./lib/middleware');
 const router = require('./lib/router');
 
-// configuration
-var port = config.port || process.env.PORT;
+//console.log(config);
+const port = config.application.port || process.env.PORT;
 
-mongoose.connect(config.database, { useNewUrlParser: true });
+config.db.connectionURL()
+	.then(connectionURL => {
+		mongoose.connect(connectionURL, { useNewUrlParser: true });
+	});
 
-app.set('secret', config.secret);
+app.set('secret', config.application.secret);
+app.set('config', config.application);
 
+app.use(compression());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
@@ -23,10 +29,9 @@ app.use(morgan('combined', { stream: logger.stream }));
 
 app.use(middleware.responseFormatter);
 
-router.load(app, config);
+router.load(app);
 
 app.use((req, res) => {
-	console.log(req.path);
 	res.status(404).json({error: '404: Page not Found'});
 });
 
