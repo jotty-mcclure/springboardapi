@@ -2,26 +2,41 @@
     {
         "method": "GET",
         "path": "/users",
-        "handlers": ["controllers.find"]
+        "handlers": [
+            "controllers.isAuthenticated",
+            "controllers.find"
+        ]
     },
     {
         "method": "POST",
         "path": "/users",
-        "handlers": ["controllers.create"]
+        "handlers": [
+            "controllers.isAuthenticated",
+            "controllers.create"
+        ]
     },
     {
         "method": "GET",
         "path": "/users/:id",
-        "handlers": ["controllers.findOne"]
+        "handlers": [
+            "controllers.isAuthenticated",
+            "controllers.findOne"
+        ]
     },
     {
         "method": "PUT",
         "path": "/users/:id",
-        "handlers": ["controllers.update"]
+        "handlers": [
+            "controllers.isAuthenticated",
+            "controllers.update"
+        ]
     },
     {
         "method": "DELETE",
         "path": "/users/:id",
-        "handlers": ["controllers.delete"]
+        "handlers": [
+            "controllers.isAuthenticated",
+            "controllers.delete"
+        ]
     }
 ]

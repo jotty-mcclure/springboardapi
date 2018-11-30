@@ -1,0 +1,16 @@
+[
+    {
+        "method": "POST",
+        "path": "/auth/local",
+        "handlers": [
+            "controllers.login"
+        ]
+    },
+    {
+        "method": "POST",
+        "path": "/auth/local/register",
+        "handlers": [
+            "controllers.register"
+        ]
+    }
+]
