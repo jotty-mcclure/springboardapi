@@ -1,0 +1,27 @@
+[
+    {
+        "method": "GET",
+        "path": "/users",
+        "handlers": ["controllers.find"]
+    },
+    {
+        "method": "POST",
+        "path": "/users",
+        "handlers": ["controllers.create"]
+    },
+    {
+        "method": "GET",
+        "path": "/users/:id",
+        "handlers": ["controllers.findOne"]
+    },
+    {
+        "method": "PUT",
+        "path": "/users/:id",
+        "handlers": ["controllers.update"]
+    },
+    {
+        "method": "DELETE",
+        "path": "/users/:id",
+        "handlers": ["controllers.delete"]
+    }
+]
