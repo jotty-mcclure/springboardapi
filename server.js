@@ -1,14 +1,12 @@
 var express 	= require('express'),
 	app         = express(),
 	bodyParser  = require('body-parser'),
-	bcrypt		= require('bcrypt'),
 	helmet		= require('helmet'),
 	morgan      = require('morgan'),
 	mongoose    = require('mongoose'),
-	promise		= require('bluebird'),
 	config		= require('./_config'),
-	fs			= require('fs'),
-	middleware 	= require('./lib/middleware');
+	middleware 	= require('./lib/middleware'),
+	router		= require('./lib/router');
 
 // configuration
 var port = config.port || process.env.PORT;
@@ -25,12 +23,7 @@ app.use(morgan('dev'));
 app.use(middleware.isAuthenticated);
 app.use(middleware.responseFormatter);
 
-// routes
-fs.readdirSync('./api')
-	.filter(itm => fs.lstatSync(`./api/${itm}`).isDirectory() && itm.charAt(0) !== '_')
-	.forEach(api => {
-		app.use(`${config.apiUrlBasePath}/`, require(`./api/${api}/routes`));
-	});	
+router.load(app, config);
 
 // start server
 app.listen(port);
