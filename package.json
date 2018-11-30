@@ -7,6 +7,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "app-root-path": "^2.1.0",
     "bcrypt": "^3.0.2",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
@@ -18,7 +19,8 @@
     "lodash": "^4.17.11",
     "mongoose": "^5.3.14",
     "morgan": "^1.9.1",
-    "stripe": "^6.16.0"
+    "stripe": "^6.16.0",
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "pluralize": "^7.0.0"

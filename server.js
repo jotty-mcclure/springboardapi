@@ -1,12 +1,13 @@
-var express 	= require('express'),
-	app         = express(),
-	bodyParser  = require('body-parser'),
-	helmet		= require('helmet'),
-	morgan      = require('morgan'),
-	mongoose    = require('mongoose'),
-	config		= require('./_config'),
-	middleware 	= require('./lib/middleware'),
-	router		= require('./lib/router');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const config = require('./_config');
+const logger = require('./lib/logger');
+const middleware = require('./lib/middleware');
+const router = require('./lib/router');
 
 // configuration
 var port = config.port || process.env.PORT;
@@ -18,11 +19,18 @@ app.set('secret', config.secret);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(morgan('dev'));
+app.use(morgan('combined', { stream: logger.stream }));
 
 app.use(middleware.responseFormatter);
 
 router.load(app, config);
 
+app.use((req, res) => {
+	console.log(req.path);
+	res.status(404).json({error: '404: Page not Found'});
+});
+
 // start server
-app.listen(port);
+app.listen(port, ()=>{
+	logger.info('Server started')
+});
