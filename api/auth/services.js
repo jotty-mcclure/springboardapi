@@ -1,12 +1,11 @@
 const bcrypt = require('bcrypt');
-const config = require('../../_config');
 const jwt    = require('jsonwebtoken');
 const Model  = require('../user/model');
 
 module.exports = {
-    createToken: async (payload) => {
+    createToken: async (secret, payload) => {
         // expires in 24 hours
-        return jwt.sign(payload, config.secret, { expiresIn: 86400 });
+        return jwt.sign(payload, secret, { expiresIn: 86400 });
     },
 
     login: async (req, res) => {
@@ -22,10 +21,11 @@ module.exports = {
                     return bcrypt.compare(req.body.password, user.password)
                             .then((doesMatch) => {
                                 if (doesMatch){
-                                    return module.exports.createToken({
+                                    return module.exports.createToken(req.app.get('config').secret, {
                                                 'fullName': user.fullName,
                                                 'username': user.username,
-                                                'email': user.email
+                                                'email': user.email,
+                                                'role': user.role
                                             })
                                             .then(token => {
                                                 return {

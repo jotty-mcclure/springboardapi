@@ -9,8 +9,6 @@ const config = require('./lib/config');
 const logger = require('./lib/logger');
 const middleware = require('./lib/middleware');
 const router = require('./lib/router');
-
-//console.log(config);
 const port = config.application.port || process.env.PORT;
 
 config.db.connectionURL()
