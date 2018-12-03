@@ -1,9 +1,11 @@
 const Model = require('./model');
 const bcrypt = require('bcrypt');
+const utils = require('../../lib/utils');
 
 module.exports = {
-    fetchAll: async (params) => {
-        return Model.find();
+    fetchAll: async (query) => {
+        const parsed = await utils.parseQuery(query);
+        return Model.find(parsed.filters, parsed.select, parsed.cursor);
     },
 
     fetch: async (id) => {
