@@ -1,9 +1,0 @@
-{
-    "objectId": "teams",
-    "permissions": {
-        "read": true,
-        "edit": true,
-        "delete": true,
-        "grant": true
-    }
-}
