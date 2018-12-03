@@ -2,40 +2,40 @@
     {
         "method": "GET",
         "path": "/users",
+        "roles": ["authenticated", "admin"],
         "handlers": [
-            "controllers.isAuthenticated",
             "controllers.find"
         ]
     },
     {
         "method": "POST",
         "path": "/users",
+        "roles": ["authenticated", "admin"],
         "handlers": [
-            "controllers.isAuthenticated",
             "controllers.create"
         ]
     },
     {
         "method": "GET",
         "path": "/users/:id",
+        "roles": ["authenticated", "admin"],
         "handlers": [
-            "controllers.isAuthenticated",
             "controllers.findOne"
         ]
     },
     {
         "method": "PUT",
         "path": "/users/:id",
+        "roles": ["authenticated", "admin"],
         "handlers": [
-            "controllers.isAuthenticated",
             "controllers.update"
         ]
     },
     {
         "method": "DELETE",
         "path": "/users/:id",
+        "roles": ["authenticated", "admin"],
         "handlers": [
-            "controllers.isAuthenticated",
             "controllers.delete"
         ]
     }
