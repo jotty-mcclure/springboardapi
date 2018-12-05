@@ -5,7 +5,7 @@ const utils = require('../../lib/utils');
 module.exports = {
     fetchAll: async (query) => {
         const parsed = await utils.parseQuery(query);
-        return Model.find(parsed.filters, parsed.select, parsed.cursor);
+        return Model.find(parsed.filters, parsed.select, parsed.cursor)
     },
 
     fetch: async (id) => {

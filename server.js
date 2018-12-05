@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(morgan('combined', { stream: logger.stream }));
 
-app.use(middleware.responseFormatter);
+//app.use(middleware.responseFormatter);
 
 router.load(app);
 
