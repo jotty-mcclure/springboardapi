@@ -25,13 +25,13 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(morgan('combined', { stream: logger.stream }));
 
-//app.use(middleware.responseFormatter);
-
 router.load(app);
 
 app.use((req, res) => {
 	res.status(404).json({error: '404: Page not Found'});
 });
+
+app.use(middleware.errorHandler);
 
 // start server
 app.listen(port, ()=>{

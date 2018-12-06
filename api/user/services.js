@@ -12,6 +12,13 @@ module.exports = {
         return Model.findById(id);
     },
 
+    count: async (query) => {
+        const parsed = await utils.parseQuery(query);
+        return Model
+                .find(parsed.filters, parsed.select, parsed.cursor)
+                .count();
+    },    
+
     add: async (data) => {
         if ( data.password )
             data.password = bcrypt.hashSync(data.password, 10);

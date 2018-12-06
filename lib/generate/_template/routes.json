@@ -7,6 +7,13 @@
         ]
     },
     {
+        "method": "GET",
+        "path": "/{{plural_url}}/count",
+        "handlers": [
+            "controllers.count"
+        ]
+    },
+    {
         "method": "POST",
         "path": "/{{plural_url}}",
         "handlers": [

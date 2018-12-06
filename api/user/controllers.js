@@ -1,53 +1,83 @@
 const User = require('./services');
 
 module.exports = {
-    find: async (req, res) => {
+    find: async (req, res, next) => {
         await User.fetchAll(req.query)
-                    .then( results => {
-                        res.status(200).json(results);
+                    .then(results => {
+                        req.responseData = {
+                            data: results,
+                            status: 200
+                        };
+                        next();
                     })
-                    .catch( err => {
-                        res.status(500).json(err);
+                    .catch(err => {
+                        next(err);
                     });
-    },
+    },    
 
-    findOne: async (req, res) => {
+    findOne: async (req, res, next) => {
         await User.fetch(req.params.id)
-                    .then( results => {
-                        res.status(200).json(results);
+                    .then(results => {
+                        req.responseData = {
+                            data: results,
+                            status: 200
+                        };
+                        next();
                     })
-                    .catch( err => {
-                        res.status(500).json(err);
+                    .catch(err => {
+                        next(err);
                     });
     },
 
-    create : async (req, res) => {
+    count: async (req, res, next) => {
+        await User.count(req.query)
+                    .then(results => {
+                        req.responseData = {
+                            data: results,
+                            status: 200
+                        };
+                        next();
+                    })
+                    .catch(err => {
+                        next(err);
+                    });
+    },    
+
+    create: async (req, res, next) => {
         await User.add(req.body)
-                    .then( results => {
-                        res.status(201).json(results);
+                    .then(results => {
+                        req.responseData = {
+                            data: results,
+                            status: 201
+                        };
+                        next();
                     })
-                    .catch( err => {
-                        res.status(500).json(err);
+                    .catch(err => {
+                        next(err);
                     });
     },
 
-    update: async (req, res) => {
+    update: async (req, res, next) => {
         await User.edit(req.params.id, req.body)
-                    .then( results => {
-                        res.status(201).json(results);
+                    .then(results => {
+                        req.responseData = {
+                            data: results,
+                            status: 201
+                        };
+                        next();
                     })
-                    .catch( err => {
-                        res.status(500).json(err);
+                    .catch(err => {
+                        next(err);
                     });
     },
 
-    delete: async (req, res) => {
+    delete: async (req, res, next) => {
         await User.remove(req.params.id)
-                .then( results => {
-                    res.sendStatus(204);
-                })
-                .catch( err => {
-                    res.status(500).json(err);
-                });
+                    .then(results => {
+                        res.sendStatus(204);
+                    })
+                    .catch(err => {
+                        next(err);
+                    });
     },
 };

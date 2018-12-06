@@ -8,6 +8,14 @@
         ]
     },
     {
+        "method": "GET",
+        "path": "/users/count",
+        "roles": ["authenticated", "admin"],
+        "handlers": [
+            "controllers.count"
+        ]
+    },    
+    {
         "method": "POST",
         "path": "/users",
         "roles": ["authenticated", "admin"],
