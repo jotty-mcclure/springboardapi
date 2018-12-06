@@ -7,7 +7,7 @@ const compression = require('compression');
 const mongoose = require('mongoose');
 const config = require('./lib/config');
 const logger = require('./lib/logger');
-const middleware = require('./lib/middleware');
+const utils = require('./lib/utils');
 const router = require('./lib/router');
 const port = config.application.port || process.env.PORT;
 
@@ -31,7 +31,7 @@ app.use((req, res) => {
 	res.status(404).json({error: '404: Page not Found'});
 });
 
-app.use(middleware.errorHandler);
+app.use(utils.errorHandler);
 
 // start server
 app.listen(port, ()=>{
