@@ -4,7 +4,8 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "NODE_ENV=test mocha --exit --timeout 10000 --no-deprecation"
   },
   "dependencies": {
     "app-root-path": "^2.1.0",
@@ -24,6 +25,9 @@
     "winston": "^3.1.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0",
     "pluralize": "^7.0.0"
   }
 }
