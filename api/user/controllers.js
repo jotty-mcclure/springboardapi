@@ -74,7 +74,11 @@ module.exports = {
     delete: async (req, res, next) => {
         await User.remove(req.params.id)
                     .then(results => {
-                        res.sendStatus(204);
+                        if (results) {
+                            res.sendStatus(204);
+                        } else {
+                            next(new Error('No record exists with this ID.'));
+                        }
                     })
                     .catch(err => {
                         next(err);

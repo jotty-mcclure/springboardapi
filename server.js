@@ -35,5 +35,7 @@ app.use(utils.errorHandler);
 
 // start server
 app.listen(port, ()=>{
-	logger.info('Server started')
+	logger.info('Server started');
 });
+
+module.exports = app;
