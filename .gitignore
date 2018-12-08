@@ -30,3 +30,7 @@ package-lock.json
 
 # Dev environment settings 
 .vscode/*
+
+client/dist/*
+client/dist/index.html
+client/dist/index.js

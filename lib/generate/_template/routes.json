@@ -1,0 +1,44 @@
+[
+    {
+        "method": "GET",
+        "path": "/{{plural_url}}",
+        "handlers": [
+            "controllers.find"
+        ]
+    },
+    {
+        "method": "GET",
+        "path": "/{{plural_url}}/count",
+        "handlers": [
+            "controllers.count"
+        ]
+    },
+    {
+        "method": "POST",
+        "path": "/{{plural_url}}",
+        "handlers": [
+            "controllers.create"
+        ]
+    },
+    {
+        "method": "GET",
+        "path": "/{{plural_url}}/:id",
+        "handlers": [
+            "controllers.findOne"
+        ]
+    },
+    {
+        "method": "PUT",
+        "path": "/{{plural_url}}/:id",
+        "handlers": [
+            "controllers.update"
+        ]
+    },
+    {
+        "method": "DELETE",
+        "path": "/{{plural_url}}/:id",
+        "handlers": [
+            "controllers.delete"
+        ]
+    }
+]
