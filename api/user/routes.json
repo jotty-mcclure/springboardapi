@@ -4,6 +4,7 @@
         "path": "/users",
         "roles": ["authenticated", "admin"],
         "handlers": [
+            "utils.parseQuery",
             "controllers.find"
         ]
     },
@@ -12,6 +13,7 @@
         "path": "/users/count",
         "roles": ["authenticated", "admin"],
         "handlers": [
+            "utils.parseQuery",
             "controllers.count"
         ]
     },    

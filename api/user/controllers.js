@@ -2,7 +2,7 @@ const User = require('./services');
 
 module.exports = {
     find: async (req, res, next) => {
-        await User.fetchAll(req.query)
+        await User.fetchAll(req.queryHelpers)
                     .then(results => {
                         req.responseData = {
                             data: results,
@@ -30,7 +30,7 @@ module.exports = {
     },
 
     count: async (req, res, next) => {
-        await User.count(req.query)
+        await User.count(req.queryHelpers)
                     .then(results => {
                         req.responseData = {
                             data: results,
