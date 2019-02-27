@@ -3,6 +3,7 @@
         "method": "GET",
         "path": "/{{plural_url}}",
         "handlers": [
+            "utils.parseQuery",
             "controllers.find"
         ]
     },
@@ -10,6 +11,7 @@
         "method": "GET",
         "path": "/{{plural_url}}/count",
         "handlers": [
+            "utils.parseQuery",
             "controllers.count"
         ]
     },
