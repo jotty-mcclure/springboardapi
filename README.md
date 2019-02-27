@@ -32,5 +32,10 @@ Clone this repo.
 ### Configuration
 All configs are stored in `lib/config/[env]`.
 
+### Generating APIs
+This framework has a built in API generator that offers all of the basic CRUD features.
+
+Use the command `node lib/generate [api name]` to create a new API. Be sure to use a singular name in the command. The API routes will use the plural version in the URL.
+
 ### Test
 To unit test the API, run `npm test`. 
