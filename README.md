@@ -27,10 +27,10 @@ Let's face it... you don't want to be tied down or boxed in by a framework that 
 ### Installation
 Clone this repo.
 `git clone [RepoUL] && cd SpringboardAPI`
-`npm install` or `yarn install`, if you're really cool.
+`npm install` or `yarn`, if you're really cool.
 
 ### Configuration
-
+All configs are stored in `lib/config/[env]`.
 
 ### Test
-To test the API, run `npm test`. 
+To unit test the API, run `npm test`. 
