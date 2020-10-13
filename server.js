@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -26,6 +27,14 @@ app.use(helmet());
 app.use(morgan('combined', { stream: logger.stream }));
 
 router.load(app);
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, './public/index.html'), (err) => {
+	  if (err) res.status(500).send(err);
+	});
+});
 
 app.use((req, res) => {
 	res.status(404).json({error: '404: Page not Found'});
