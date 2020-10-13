@@ -2,9 +2,9 @@
     "default": {
         "settings": {
             "client": "mongodb",
-            "username": "dbo",
-            "password": "123456",
-            "database": "fpmTest",
+            "username": "",
+            "password": "",
+            "database": "",
             "host": "127.0.0.1",
             "port": "27017"
         },

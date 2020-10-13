@@ -34,3 +34,4 @@ package-lock.json
 client/dist/*
 client/dist/index.html
 client/dist/index.js
+public/*
