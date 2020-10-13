@@ -1,60 +1,37 @@
 const bcrypt = require('bcrypt');
-const jwt    = require('jsonwebtoken');
+const _      = require('lodash');
+const utils  = require('../../lib/utils');
 const Model  = require('../user/model');
 
 module.exports = {
-    createToken: async (secret, payload) => {
-        // expires in 24 hours
-        return jwt.sign(payload, secret, { expiresIn: 86400 });
-    },
-
-    login: async (req, res) => {
-        return Model.findOne({$or: [{email: req.body.identity}, {username: req.body.identity}]})
-            .then( user => {
-                if (!user) {
-                    return {
-                        status: 401,
-                        data: 'Authentication failed.'
-                    };
-                } else if (user) {
-                    // check if password matches
+    login: async (req) => {
+        const searchCriteria = { $or: [{email: req.body.identity}, {username: req.body.identity}] };
+        return await Model.findOne(searchCriteria)
+                .then( user => {
+                    if (!user)
+                        return { status: 401, data: 'Authentication failed.' };
+                    
                     return bcrypt.compare(req.body.password, user.password)
-                            .then((doesMatch) => {
-                                if (doesMatch){
-                                    return module.exports.createToken(req.app.get('config').secret, {
-                                                'fullName': user.fullName,
-                                                'username': user.username,
-                                                'email': user.email,
-                                                'role': user.role
-                                            })
-                                            .then(token => {
-                                                return {
-                                                    status: 200,
-                                                    data: {
-                                                        token: token
-                                                    }
-                                                };
-                                            });
-                                }else{
-                                    return {
-                                        status: 401,
-                                        data: 'Authentication failed.'
-                                    };
-                                }
+                            .then( doesMatch => {
+                                if (!doesMatch)
+                                    return { status: 401, data: 'Authentication failed.' };
+
+                                const payload = _.pick(user, ['fullName', 'username', 'email', 'role']);
+                                return utils.createToken(req.app.get('config').secret, payload)
+                                        .then(token => {
+                                            return { status: 200, data: { token: token } };
+                                        });
                             })
-                            .catch((err) => {
-                                console.log(err);
-                                return false;
+                            .catch( err => {
+                                return { status: 500, data: null, err: err };
                             });
-                }
-            })
-            .catch((err)=>{
-                console.log(err);
-                return err;
-            });
+                })
+                .catch( err =>{
+                    return { status: 500, data: null, err: err };
+                });
     },
 
-    register: async (req, res, next) => {
+    register: async (req) => {
         const userObj = req.body;
         const unhashedPass = req.body.password;
         const createStripeCustomer = req.body.createStripeCustomer;
@@ -64,57 +41,49 @@ module.exports = {
         userObj.password = bcrypt.hashSync(userObj.password, 256);
 
         // Save the new user
-        return Model.create(userObj)
+        return await Model.create(userObj)
                 .then( newUser => {
                     // Check if a new stripe customer should be created
                     if ( createStripeCustomer && stripeToken ) {
-                        const newCustomer = {
+                        const newStripeCustomer = {
                             email: newUser.email,
                             source: stripeToken,
                             metadata: {
                                 id: newUser.id,
-                                name: newUser.name.last + ', ' + newUser.name.first
+                                name: newUser.fullName
                             }
                         };
 
                         return stripe.customers
-                                .create(newCustomer)
-                                .then(function(customer) {
+                                .create(newStripeCustomer)
+                                .then( customer => {
                                     // Update the new user with the account details and strip info.
-                                    var updateObj = {
+                                    const updateObj = {
                                         accountId: newAccountId,
                                         stripeCustomerId: customer.id
                                     };
 
                                     return Model.update({'email': customer.email}, updateObj)
-                                        .then(function(updatedUser) {
-                                            return res.send(200);
-                                        }).catch(function(err) {
-                                            console.log(err);
-                                            return false;
-                                        });
-                                }).catch(function(err) {
-                                    console.log(err);
-                                    return false;
+                                                    .then( updatedUser => {
+                                                        return { status: 201, data: updatedUser };
+                                                    })
+                                                    .catch( err =>{
+                                                        return { status: 500, data: null, err: err };
+                                                    });
+                                })
+                                .catch( err =>{
+                                    return { status: 500, data: null, err: err };
                                 });
                     } else {
-                        return module.exports.createToken({
-                                    'fullName': newUser.fullName,
-                                    'username': newUser.username,
-                                    'email': newUser.email
-                                })
-                                .then(token => {
-                                    return {
-                                        status: 200,
-                                        data: {
-                                            token: token
-                                        }
-                                    };
-                                });
+                        const payload = _.pick(newUser, ['fullName', 'username', 'email', 'role']);
+                        return utils.createToken(req.app.get('config').secret, payload)
+                                        .then(token => {
+                                            return { status: 201, data: { token: token } };
+                                        });
                     }
-                }).catch(function(err) {
-                    console.log(err)
-                    return false;
+                })
+                .catch( err =>{
+                    return { status: 500, data: null, err: err };
                 });
     }
 };
